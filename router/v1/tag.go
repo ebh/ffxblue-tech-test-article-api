@@ -1,13 +1,13 @@
 package v1
 
 import (
+	"awesomeProject/models"
 	"awesomeProject/pkg/app"
 	"awesomeProject/pkg/util"
 	"awesomeProject/services/tag_service"
 	"github.com/gin-gonic/gin"
 
 	"net/http"
-	"regexp"
 )
 
 func GetTaggedArticles(c *gin.Context) {
@@ -15,7 +15,7 @@ func GetTaggedArticles(c *gin.Context) {
 	tagName := c.Param("tagName")
 	dateStr := c.Param("date")
 
-	if !validateTagName(tagName) {
+	if !models.ValidateTagName(tagName) {
 		appG.Response(http.StatusBadRequest, "invalid tag name", nil)
 		return
 	}
@@ -29,17 +29,4 @@ func GetTaggedArticles(c *gin.Context) {
 	as := tag_service.GetArticles(tagName, date)
 	summary := as.GetTagSummary(tagName)
 	appG.Response(http.StatusOK, "", summary)
-}
-
-func validateTagName(s string) bool { // TODO - Move this to model
-	if s == "" {
-		return false
-	}
-
-	matched, err := regexp.MatchString("^[[:alnum:]]*$", s)
-	if err != nil {
-		return false
-	}
-
-	return matched
 }

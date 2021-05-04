@@ -42,8 +42,14 @@ func AddArticle(c *gin.Context) {
 		return
 	}
 
-	// NOTE:
-
+	// NOTE: In a real-world scenario, where DynamoDB is used, it is possible
+	// to the article_service.AddArticle() call above to succeed and the
+	// ag_service.AddArticle() call below to fail. That is the datastore
+	// operations are not atomic.
+	// This would lead to data inconsistencies. However if the endpoint
+	// method was changed to PUT and made idempotent (see README.md) then there
+	// would not be an issue. The caller to the service would be aware something
+	// had not worked, would retry. Thus the data inconsistency would be temporary only.
 	errTags := tag_service.AddArticle(a)
 	if errTags != nil {
 		appG.Response(http.StatusInternalServerError, errTags.Error(), nil)

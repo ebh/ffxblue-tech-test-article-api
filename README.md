@@ -161,8 +161,6 @@ some things along the way.
 
 ### 6. What I would have done if I had more time
 
-There are a couple of TODOs in the comment. Things I want to refactor and/or explain.
-
 I'm not happy with the cyclomatic complexity of some of the functions.
 
 100% would have added more about making the service "production ready". Like structured logging and retries for

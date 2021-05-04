@@ -1,6 +1,9 @@
 package models
 
-import "awesomeProject/pkg/util"
+import (
+	"awesomeProject/pkg/util"
+	"regexp"
+)
 
 type Tags struct {
 	Tags []string `json:"tags"`
@@ -34,4 +37,17 @@ func (r *Articles) GetTagSummary(tag string) TagSummary {
 	}
 
 	return ts
+}
+
+func ValidateTagName(s string) bool {
+	if s == "" {
+		return false
+	}
+
+	matched, err := regexp.MatchString("^[[:alnum:]]*$", s)
+	if err != nil {
+		return false
+	}
+
+	return matched
 }

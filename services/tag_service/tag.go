@@ -19,6 +19,9 @@ func init() {
 	}
 }
 
+// AddArticle returns an error because in a real-world scenario,
+// where DynamoDB is used things could go wrong and error might
+// need to be returned
 func AddArticle(a models.Article) error {
 	db.Lock()
 	defer db.Unlock()
@@ -27,7 +30,7 @@ func AddArticle(a models.Article) error {
 		setTag(t, a)
 	}
 
-	return nil // TODO - Note about why this was done
+	return nil
 }
 
 func setTag(tag string, a models.Article) {
