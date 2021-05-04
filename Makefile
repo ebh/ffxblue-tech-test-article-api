@@ -1,7 +1,5 @@
 .PHONY: run build clean tool lint
 
-all: build
-
 run:
 	go run .
 
